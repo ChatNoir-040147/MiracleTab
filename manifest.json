@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "MiracleTabs",
+  "description": "Extension pour bloquer les onglets ouverts par une liste de sites",
+  "version": "3.5",
+  "permissions": [
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "icon.png",
+    "default_title": "Activer / Désactiver l'extension"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
