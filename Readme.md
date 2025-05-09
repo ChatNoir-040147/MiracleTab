@@ -1,6 +1,6 @@
 # Stop Aux Fenêtres Intrusives !
 
-**Marre de ces sites web qui vous bombardent de nouvelles fenêtres à chaque clic ?** Vous n'êtes pas seuls ! Cette extension Chrome est là pour mettre de l'ordre dans ce chaos numérique et vous offrir une navigation plus zen, sans les pop-ups surprises qui gâchent votre surf.
+**Marre de ces sites web qui vous bombardent de nouvelles fenêtres à chaque clic ?** Vous n'êtes pas seuls ! Cette extension Edge est là pour mettre de l'ordre dans ce chaos numérique et vous offrir une navigation plus zen, sans les pop-ups surprises qui gâchent votre surf.
 
 ## Késako ? 🤔
 
@@ -24,8 +24,8 @@ Le secret de cette extension réside dans son fichier `blocked_sites.csv`. C'est
     encore-un-site-plein-de-pubs.net
     le-roi-de-la-fenetre-popup.org
     ```
-3.  **Chargez l'extension dans Chrome :**
-    * Ouvrez Chrome et tapez `chrome://extensions` dans la barre d'adresse. Appuyez sur Entrée.
+3.  **Chargez l'extension dans Edge :**
+    * Ouvrez Edge et tapez `Edge://extensions` dans la barre d'adresse. Appuyez sur Entrée.
     * Activez le "Mode développeur" en haut à droite de la page.
     * Cliquez sur le bouton "Charger l'extension non empaquetée" en haut à gauche.
     * Sélectionnez le dossier contenant tout les fichiers de votre extension (y compris `background.js` et `blocked_sites.csv`).
