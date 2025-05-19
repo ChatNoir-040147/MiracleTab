@@ -1,6 +1,7 @@
 console.log(`[${new Date().toLocaleTimeString()}] Début de l'exécution du script background.js`);
 
 let blockedSites = [];
+let isBlockedSitesLoaded = false; // Ajout d'un indicateur de chargement
 
 async function loadBlockedSites() {
     try {
@@ -12,8 +13,10 @@ async function loadBlockedSites() {
         const csvData = await response.text();
         blockedSites = csvData.split('\n').map(site => site.trim()).filter(site => site !== '');
         console.log(`[${new Date().toLocaleTimeString()}] Liste des sites bloqués chargée :`, blockedSites);
+        isBlockedSitesLoaded = true; // Marquer comme chargé
     } catch (error) {
         console.error(`[${new Date().toLocaleTimeString()}] Erreur lors du chargement du fichier CSV:`, error);
+        isBlockedSitesLoaded = false;
     }
 }
 
@@ -22,6 +25,16 @@ chrome.runtime.onInstalled.addListener(loadBlockedSites);
 
 chrome.tabs.onCreated.addListener(async (tab) => {
     console.log(`[${new Date().toLocaleTimeString()}] Événement onCreated déclenché pour l'onglet ID: ${tab.id}, URL: ${tab.url}`);
+
+    // S'assurer que la liste est chargée avant de continuer
+    if (!isBlockedSitesLoaded) {
+        await loadBlockedSites();
+        if (!isBlockedSitesLoaded) {
+            console.warn(`[${new Date().toLocaleTimeString()}] (onCreated) La liste des sites bloqués n'a pas pu être chargée.`);
+            return;
+        }
+    }
+
     if (tab.openerTabId) {
         try {
             let openerTab = await chrome.tabs.get(tab.openerTabId);
@@ -49,6 +62,15 @@ chrome.tabs.onCreated.addListener(async (tab) => {
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     console.log(`[${new Date().toLocaleTimeString()}] Événement onUpdated déclenché pour l'onglet ID: ${tabId}, URL: ${tab.url}, Changements:`, changeInfo);
+
+    // S'assurer que la liste est chargée avant de continuer
+    if (!isBlockedSitesLoaded) {
+        await loadBlockedSites();
+        if (!isBlockedSitesLoaded) {
+            console.warn(`[${new Date().toLocaleTimeString()}] (onUpdated) La liste des sites bloqués n'a pas pu être chargée.`);
+            return;
+        }
+    }
 
     if (tab.url && (tab.url.startsWith("chrome://newtab/") || tab.url.startsWith("edge://newtab/"))) {
         return;
